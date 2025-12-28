@@ -4,6 +4,14 @@ import Roles from "./pages/Roles";
 import RoleGroups from "./pages/RoleGroups";
 import Users from "./pages/Users";
 import Login from "./pages/Login";
+import Brands from "./pages/Brands";
+import VehicleModels from "./pages/VehicleModels";
+import VehicleGenerations from "./pages/VehicleGenerations";
+import Categories from "./pages/Categories";
+import Manufacturers from "./pages/Manufacturers";
+
+
+
 import { authService } from "./services/authService";
 
 function App() {
@@ -49,6 +57,16 @@ function App() {
         {activeMenu === "users" && <Users />}
         {activeMenu === "roles" && <Roles />}
         {activeMenu === "role-groups" && <RoleGroups />}
+        {activeMenu === "brands" && <Brands />}
+        {activeMenu === "vehicle-models" && <VehicleModels />}
+        {activeMenu === "vehicle-generations" && <VehicleGenerations />}
+        {activeMenu === "categories" && <Categories />}
+        {activeMenu === "manufacturers" && <Manufacturers />}
+
+
+
+
+
       </main>
     </div>
   );

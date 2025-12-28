@@ -19,24 +19,77 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
 
       {/* Menu */}
       <nav className="flex-1 p-4">
+
         <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4 mt-8">
-    Araç Yönetimi
-  </p>
-  <ul className="space-y-2">
-    <li>
-      <button
-        onClick={() => setActiveMenu("brands")}
-        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-          activeMenu === "brands"
-            ? "bg-green-600 text-white"
-            : "text-gray-400 hover:bg-gray-800 hover:text-white"
-        }`}
-      >
-        <span className="text-lg">🚗</span>
-        <span>Markalar</span>
-      </button>
-    </li>
-  </ul>
+          Katalog Yönetimi
+        </p>
+        <ul className="space-y-2">
+          <li>
+            <button
+              onClick={() => setActiveMenu("categories")}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "categories"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
+            >
+              <span className="text-lg">📁</span>
+              <span>Kategoriler</span>
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setActiveMenu("manufacturers")}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "manufacturers"
+                  ? "bg-green-600 text-white"
+                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
+            >
+              <span className="text-lg">🏭</span>
+              <span>Üreticiler</span>
+            </button>
+          </li>
+        </ul>
+        <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4 mt-8">
+          Araç Yönetimi
+        </p>
+        <ul className="space-y-2">
+          <li>
+            <button
+              onClick={() => setActiveMenu("brands")}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "brands"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
+            >
+              <span className="text-lg">🚗</span>
+              <span>Markalar</span>
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setActiveMenu("vehicle-models")}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "vehicle-models"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
+            >
+              <span className="text-lg">🚙</span>
+              <span>Modeller</span>
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setActiveMenu("vehicle-generations")}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "vehicle-generations"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
+            >
+              <span className="text-lg">📅</span>
+              <span>Nesiller</span>
+            </button>
+          </li>
+        </ul>
         <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4">
           Kullanıcı Yönetimi
         </p>
@@ -44,11 +97,10 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
           <li>
             <button
               onClick={() => setActiveMenu("users")}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                activeMenu === "users"
-                  ? "bg-green-600 text-white"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "users"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
             >
               <span className="text-lg">👤</span>
               <span>Kullanıcılar</span>
@@ -57,11 +109,10 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
           <li>
             <button
               onClick={() => setActiveMenu("roles")}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                activeMenu === "roles"
-                  ? "bg-green-600 text-white"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "roles"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
             >
               <span className="text-lg">🔑</span>
               <span>Roller</span>
@@ -70,11 +121,10 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
           <li>
             <button
               onClick={() => setActiveMenu("role-groups")}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                activeMenu === "role-groups"
-                  ? "bg-green-600 text-white"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${activeMenu === "role-groups"
+                ? "bg-green-600 text-white"
+                : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                }`}
             >
               <span className="text-lg">👥</span>
               <span>Rol Grupları</span>

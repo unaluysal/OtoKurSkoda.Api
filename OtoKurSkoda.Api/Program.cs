@@ -4,10 +4,16 @@ using Microsoft.IdentityModel.Tokens;
 using OtoKurSkoda.Application.Mapping;
 using OtoKurSkoda.Application.Services.AuthServices.Interfaces;
 using OtoKurSkoda.Application.Services.AuthServices.Services;
+using OtoKurSkoda.Application.Services.CatalogServices.Interfaces;
+using OtoKurSkoda.Application.Services.CatalogServices.Services;
+using OtoKurSkoda.Application.Services.ProductServices.Interfaces;
+using OtoKurSkoda.Application.Services.ProductServices.Services;
 using OtoKurSkoda.Application.Services.RoleServices.Interfaces;
 using OtoKurSkoda.Application.Services.RoleServices.Services;
 using OtoKurSkoda.Application.Services.UserServices.Interfaces;
 using OtoKurSkoda.Application.Services.UserServices.Services;
+using OtoKurSkoda.Application.Services.VehicleServices.Interfaces;
+using OtoKurSkoda.Application.Services.VehicleServices.Services;
 using OtoKurSkoda.Application.Settings;
 using OtoKurSkoda.Infrastructure.Context;
 using OtoKurSkoda.Infrastructure.Repositories;
@@ -43,6 +49,19 @@ builder.Services.AddScoped<IRoleGroupService, RoleGroupService>();
 builder.Services.AddScoped<IRoleGroupRoleService, RoleGroupRoleService>();
 builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IVehicleModelService, VehicleModelService>();
+builder.Services.AddScoped<IVehicleGenerationService, VehicleGenerationService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+builder.Services.AddScoped<IAttributeDefinitionService, AttributeDefinitionService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
+builder.Services.AddScoped<IProductCompatibilityService, ProductCompatibilityService>();
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -83,12 +102,11 @@ builder.Services.AddAuthentication(options =>
 // ═══════════════════════════════════════
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
-              .AllowAnyHeader()
+        policy.AllowAnyOrigin()
               .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowAnyHeader();
     });
 });
 
@@ -105,7 +123,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowReactApp");
+app.UseCors("AllowAll");
 
 app.UseAuthentication();  // JWT için - Authorization'dan önce olmalı!
 app.UseAuthorization();

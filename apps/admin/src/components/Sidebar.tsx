@@ -19,6 +19,24 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
 
       {/* Menu */}
       <nav className="flex-1 p-4">
+        <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4 mt-8">
+    Araç Yönetimi
+  </p>
+  <ul className="space-y-2">
+    <li>
+      <button
+        onClick={() => setActiveMenu("brands")}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
+          activeMenu === "brands"
+            ? "bg-green-600 text-white"
+            : "text-gray-400 hover:bg-gray-800 hover:text-white"
+        }`}
+      >
+        <span className="text-lg">🚗</span>
+        <span>Markalar</span>
+      </button>
+    </li>
+  </ul>
         <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4">
           Kullanıcı Yönetimi
         </p>
@@ -63,6 +81,7 @@ export default function Sidebar({ activeMenu, setActiveMenu, onLogout }: Sidebar
             </button>
           </li>
         </ul>
+
       </nav>
 
       {/* User */}

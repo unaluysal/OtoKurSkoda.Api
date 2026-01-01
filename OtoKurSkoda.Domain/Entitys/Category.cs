@@ -14,6 +14,7 @@ namespace OtoKurSkoda.Domain.Entitys
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
         public string? IconClass { get; set; }      // Font Awesome veya benzeri ikon
+        public string? Color { get; set; }          // Kategori rengi (hex: #FF5733)
         public int DisplayOrder { get; set; }
         public int Level { get; set; }              // 0 = ana, 1 = alt, 2 = alt-alt...
 

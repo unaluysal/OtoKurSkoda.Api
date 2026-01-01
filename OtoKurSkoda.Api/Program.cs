@@ -8,12 +8,17 @@ using OtoKurSkoda.Application.Services.CatalogServices.Interfaces;
 using OtoKurSkoda.Application.Services.CatalogServices.Services;
 using OtoKurSkoda.Application.Services.ProductServices.Interfaces;
 using OtoKurSkoda.Application.Services.ProductServices.Services;
+using OtoKurSkoda.Application.Services.CartServices.Interfaces;
+using OtoKurSkoda.Application.Services.CartServices.Services;
+using OtoKurSkoda.Application.Services.OrderServices.Interfaces;
+using OtoKurSkoda.Application.Services.OrderServices.Services;
 using OtoKurSkoda.Application.Services.RoleServices.Interfaces;
 using OtoKurSkoda.Application.Services.RoleServices.Services;
 using OtoKurSkoda.Application.Services.UserServices.Interfaces;
 using OtoKurSkoda.Application.Services.UserServices.Services;
 using OtoKurSkoda.Application.Services.VehicleServices.Interfaces;
 using OtoKurSkoda.Application.Services.VehicleServices.Services;
+using OtoKurSkoda.Application.Services.AddressServices.Services;
 using OtoKurSkoda.Application.Settings;
 using OtoKurSkoda.Infrastructure.Context;
 using OtoKurSkoda.Infrastructure.Repositories;
@@ -61,6 +66,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
 builder.Services.AddScoped<IProductCompatibilityService, ProductCompatibilityService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
 
 builder.Services.AddHttpContextAccessor();
@@ -122,6 +130,20 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Static files - wwwroot için varsayılan
+app.UseStaticFiles();
+
+// Uploads klasörü için özel static files yapılandırması
+var uploadsPath = Path.Combine(app.Environment.ContentRootPath, "uploads");
+if (!Directory.Exists(uploadsPath))
+    Directory.CreateDirectory(uploadsPath);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
+});
 
 app.UseCors("AllowAll");
 

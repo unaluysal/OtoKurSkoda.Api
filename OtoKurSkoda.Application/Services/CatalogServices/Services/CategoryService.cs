@@ -43,6 +43,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = c.Description,
                 ImageUrl = c.ImageUrl,
                 IconClass = c.IconClass,
+                Color = c.Color,
                 DisplayOrder = c.DisplayOrder,
                 Level = c.Level,
                 MetaTitle = c.MetaTitle,
@@ -83,6 +84,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Name = category.Name,
                 Slug = category.Slug,
                 IconClass = category.IconClass,
+                Color = category.Color,
                 DisplayOrder = category.DisplayOrder,
                 Level = category.Level,
                 ProductCount = category.Products.Count,
@@ -110,6 +112,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = c.Description,
                 ImageUrl = c.ImageUrl,
                 IconClass = c.IconClass,
+                Color = c.Color,
                 DisplayOrder = c.DisplayOrder,
                 Level = c.Level,
                 Status = c.Status,
@@ -140,6 +143,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = c.Description,
                 ImageUrl = c.ImageUrl,
                 IconClass = c.IconClass,
+                Color = c.Color,
                 DisplayOrder = c.DisplayOrder,
                 Level = c.Level,
                 Status = c.Status,
@@ -173,6 +177,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = category.Description,
                 ImageUrl = category.ImageUrl,
                 IconClass = category.IconClass,
+                Color = category.Color,
                 DisplayOrder = category.DisplayOrder,
                 Level = category.Level,
                 MetaTitle = category.MetaTitle,
@@ -209,6 +214,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = category.Description,
                 ImageUrl = category.ImageUrl,
                 IconClass = category.IconClass,
+                Color = category.Color,
                 DisplayOrder = category.DisplayOrder,
                 Level = category.Level,
                 MetaTitle = category.MetaTitle,
@@ -250,6 +256,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = request.Description,
                 ImageUrl = request.ImageUrl,
                 IconClass = request.IconClass,
+                Color = request.Color,
                 DisplayOrder = request.DisplayOrder,
                 Level = level,
                 MetaTitle = request.MetaTitle ?? request.Name,
@@ -269,6 +276,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = category.Description,
                 ImageUrl = category.ImageUrl,
                 IconClass = category.IconClass,
+                Color = category.Color,
                 DisplayOrder = category.DisplayOrder,
                 Level = category.Level,
                 MetaTitle = category.MetaTitle,
@@ -312,6 +320,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
             category.Description = request.Description;
             category.ImageUrl = request.ImageUrl;
             category.IconClass = request.IconClass;
+            category.Color = request.Color;
             category.DisplayOrder = request.DisplayOrder;
             category.Level = level;
             category.MetaTitle = request.MetaTitle ?? request.Name;
@@ -330,6 +339,7 @@ namespace OtoKurSkoda.Application.Services.CatalogServices.Services
                 Description = category.Description,
                 ImageUrl = category.ImageUrl,
                 IconClass = category.IconClass,
+                Color = category.Color,
                 DisplayOrder = category.DisplayOrder,
                 Level = category.Level,
                 MetaTitle = category.MetaTitle,

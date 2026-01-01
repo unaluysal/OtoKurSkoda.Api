@@ -1,4 +1,4 @@
-﻿using OtoKurSkoda.Application.Defaults;
+using OtoKurSkoda.Application.Defaults;
 using OtoKurSkoda.Application.Dtos;
 
 namespace OtoKurSkoda.Application.Services.UserServices.Interfaces
@@ -11,5 +11,6 @@ namespace OtoKurSkoda.Application.Services.UserServices.Interfaces
         Task<ServiceResult> CreateAsync(CreateUserRequest request);
         Task<ServiceResult> UpdateAsync(UpdateUserRequest request);
         Task<ServiceResult> DeleteAsync(Guid id);
+        Task<ServiceResult> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword);
     }
 }

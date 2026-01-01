@@ -20,7 +20,8 @@ namespace OtoKurSkoda.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var result = await _authService.RegisterAsync(request);
+            var ipAddress = GetIpAddress();
+            var result = await _authService.RegisterAsync(request, ipAddress);
             return Ok(result);
         }
 

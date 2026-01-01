@@ -30,10 +30,11 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
             _userRoleService = userRoleService; 
         }
 
-        public async Task<ServiceResult> RegisterAsync(RegisterRequest request)
+        public async Task<ServiceResult> RegisterAsync(RegisterRequest request, string ipAddress = "")
         {
             var userRepo = _unitOfWork.GetRepository<User>();
             var roleGroupRepo = _unitOfWork.GetRepository<RoleGroup>();
+            var refreshTokenRepo = _unitOfWork.GetRepository<RefreshToken>();
 
             if (await userRepo.AnyAsync(u => u.Email == request.Email))
                 return ErrorDataResult<AuthResponse>(null, "EMAIL_EXISTS", "Bu email zaten kayıtlı.");
@@ -48,12 +49,13 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
                 PasswordHash = HashPassword(request.Password),
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                EmailConfirmed = false,
-                PhoneConfirmed = false
+                EmailConfirmed = true,
+                PhoneConfirmed = true,
+                Status = true
             };
 
             await userRepo.AddWithoutTokenAsync(user);
-            await _unitOfWork.SaveChangesAsync();  // Önce user'ı kaydet
+            await _unitOfWork.SaveChangesAsync();
 
             // Varsayılan "Customers" rolü ata
             var customerRoleGroup = await roleGroupRepo.GetFirstWhereAsync(rg => rg.Name == "Customers");
@@ -64,11 +66,26 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
                     UserId = user.Id,
                     RoleGroupId = customerRoleGroup.Id
                 });
-                // AssignRoleGroupAsync içinde zaten SaveChangesAsync var
             }
+
+            // Token oluştur
+            var permissions = new UserPermissionsDto
+            {
+                RoleGroups = new List<string> { "Customers" },
+                Permissions = new List<string>()
+            };
+
+            var accessToken = GenerateAccessToken(user, permissions);
+            var refreshToken = CreateRefreshToken(user.Id, ipAddress);
+
+            await refreshTokenRepo.AddWithoutTokenAsync(refreshToken);
+            await _unitOfWork.SaveChangesAsync();
 
             return SuccessDataResult(new AuthResponse
             {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken.Token,
+                AccessTokenExpiration = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
                 User = new UserDto
                 {
                     Id = user.Id,

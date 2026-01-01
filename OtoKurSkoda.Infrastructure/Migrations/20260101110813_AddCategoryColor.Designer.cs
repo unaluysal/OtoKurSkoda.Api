@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OtoKurSkoda.Infrastructure.Context;
@@ -11,9 +12,11 @@ using OtoKurSkoda.Infrastructure.Context;
 namespace OtoKurSkoda.Infrastructure.Migrations
 {
     [DbContext(typeof(OtoKurSkodaDbContext))]
-    partial class OtoKurSkodaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260101110813_AddCategoryColor")]
+    partial class AddCategoryColor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,6 +273,9 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnOrder(1);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("timestamp")

@@ -41,6 +41,12 @@ namespace OtoKurSkoda.Infrastructure.Context
             modelBuilder.ApplyConfiguration(new CategoryAttributeConfiguration());
             modelBuilder.ApplyConfiguration(new ProductAttributeConfiguration());
 
+            // Cart & Order Configurations
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new CartItemConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -70,5 +76,11 @@ namespace OtoKurSkoda.Infrastructure.Context
         public DbSet<AttributeDefinition> AttributeDefinitions { get; set; }
         public DbSet<CategoryAttribute> CategoryAttributes { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
+
+        // Cart & Order
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }

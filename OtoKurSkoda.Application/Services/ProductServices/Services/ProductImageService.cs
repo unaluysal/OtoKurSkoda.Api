@@ -56,7 +56,9 @@ namespace OtoKurSkoda.Application.Services.ProductServices.Services
                 ThumbnailUrl = request.ThumbnailUrl,
                 AltText = request.AltText,
                 DisplayOrder = request.DisplayOrder,
-                IsMain = !hasImages || request.IsMain
+                IsMain = !hasImages || request.IsMain,
+                Status = true,
+                CreateTime = DateTime.UtcNow
             };
 
             // Eğer bu main olacaksa diğerlerinin main'ini kaldır

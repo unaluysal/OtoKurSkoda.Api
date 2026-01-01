@@ -31,6 +31,9 @@ namespace OtoKurSkoda.Application.Mapping
             CreateMap<UserRole, UserRoleDto>()
                 .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.User))
                 .ForMember(dest => dest.RoleGroup, opt => opt.MapFrom(src => src.RoleGroup));
+
+            // UserAddress
+            CreateMap<UserAddress, AddressDto>();
         }
     }
 }

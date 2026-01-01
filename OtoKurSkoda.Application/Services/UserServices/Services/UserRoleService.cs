@@ -101,7 +101,7 @@ namespace OtoKurSkoda.Application.Services.UserServices.Services
                 RoleGroupId = request.RoleGroupId
             };
 
-            await userRoleRepo.AddAsync(userRole);
+            await userRoleRepo.AddWithoutTokenAsync(userRole);
             await _unitOfWork.SaveChangesAsync();
 
             return SuccessResult("ROLE_GROUP_ASSIGNED", "Rol grubu kullanıcıya atandı.");

@@ -223,6 +223,30 @@ namespace OtoKurSkoda.Application.Services.UserServices.Services
             return SuccessResult("USER_DELETED", "Kullanıcı silindi.");
         }
 
+        public async Task<ServiceResult> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
+        {
+            var repo = _unitOfWork.GetRepository<User>();
+
+            var user = await repo.GetByIdAsync(userId);
+
+            if (user == null || !user.Status)
+                return ErrorResult("USER_NOT_FOUND", "Kullanıcı bulunamadı.");
+
+            // Mevcut şifre kontrolü
+            if (!BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash))
+                return ErrorResult("INVALID_PASSWORD", "Mevcut şifre yanlış.");
+
+            // Yeni şifre validasyonu
+            if (string.IsNullOrEmpty(newPassword) || newPassword.Length < 6)
+                return ErrorResult("INVALID_NEW_PASSWORD", "Yeni şifre en az 6 karakter olmalıdır.");
+
+            user.PasswordHash = HashPassword(newPassword);
+            repo.Update(user);
+            await _unitOfWork.SaveChangesAsync();
+
+            return SuccessResult("PASSWORD_CHANGED", "Şifre başarıyla değiştirildi.");
+        }
+
         // ═══════════════════════════════════════
         // PRIVATE METHODS
         // ═══════════════════════════════════════

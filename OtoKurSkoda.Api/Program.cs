@@ -1,24 +1,26 @@
+
+
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OtoKurSkoda.Application.Mapping;
+using OtoKurSkoda.Application.Services.AddressServices.Services;
 using OtoKurSkoda.Application.Services.AuthServices.Interfaces;
 using OtoKurSkoda.Application.Services.AuthServices.Services;
-using OtoKurSkoda.Application.Services.CatalogServices.Interfaces;
-using OtoKurSkoda.Application.Services.CatalogServices.Services;
-using OtoKurSkoda.Application.Services.ProductServices.Interfaces;
-using OtoKurSkoda.Application.Services.ProductServices.Services;
 using OtoKurSkoda.Application.Services.CartServices.Interfaces;
 using OtoKurSkoda.Application.Services.CartServices.Services;
+using OtoKurSkoda.Application.Services.CatalogServices.Interfaces;
+using OtoKurSkoda.Application.Services.CatalogServices.Services;
 using OtoKurSkoda.Application.Services.OrderServices.Interfaces;
 using OtoKurSkoda.Application.Services.OrderServices.Services;
+using OtoKurSkoda.Application.Services.ProductServices.Interfaces;
+using OtoKurSkoda.Application.Services.ProductServices.Services;
 using OtoKurSkoda.Application.Services.RoleServices.Interfaces;
 using OtoKurSkoda.Application.Services.RoleServices.Services;
 using OtoKurSkoda.Application.Services.UserServices.Interfaces;
 using OtoKurSkoda.Application.Services.UserServices.Services;
 using OtoKurSkoda.Application.Services.VehicleServices.Interfaces;
 using OtoKurSkoda.Application.Services.VehicleServices.Services;
-using OtoKurSkoda.Application.Services.AddressServices.Services;
 using OtoKurSkoda.Application.Settings;
 using OtoKurSkoda.Infrastructure.Context;
 using OtoKurSkoda.Infrastructure.Repositories;
@@ -26,6 +28,9 @@ using OtoKurSkoda.Infrastructure.UnitOfWork;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Npgsql Legacy Timestamp Behavior - DateTime.Now ile uyumluluk
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // ═══════════════════════════════════════
 // CONTROLLERS
@@ -61,10 +66,8 @@ builder.Services.AddScoped<IVehicleModelService, VehicleModelService>();
 builder.Services.AddScoped<IVehicleGenerationService, VehicleGenerationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
-builder.Services.AddScoped<IAttributeDefinitionService, AttributeDefinitionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
-builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
 builder.Services.AddScoped<IProductCompatibilityService, ProductCompatibilityService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderService, OrderService>();

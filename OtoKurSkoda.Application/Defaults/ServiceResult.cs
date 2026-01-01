@@ -4,17 +4,16 @@ namespace OtoKurSkoda.Application.Defaults
 {
     public abstract class ServiceResult
     {
-        [JsonPropertyName("Status")]
+        [JsonPropertyName("status")]
         public bool Status { get; set; }
 
-        [JsonPropertyName("StatusCode")]
+        [JsonPropertyName("statusCode")]
         public ResultStatusCode StatusCode { get; set; }
 
-
-        [JsonPropertyName("Message")]
+        [JsonPropertyName("message")]
         public string Message { get; set; }
 
-        [JsonPropertyName("MessageCode")]
+        [JsonPropertyName("messageCode")]
         public string MessageCode { get; set; }
 
         public ServiceResult(bool status, string messagecode, string message, ResultStatusCode resultStatusCode)
@@ -23,7 +22,6 @@ namespace OtoKurSkoda.Application.Defaults
             Message = message;
             MessageCode = messagecode;
             StatusCode = resultStatusCode;
-
         }
     }
 }

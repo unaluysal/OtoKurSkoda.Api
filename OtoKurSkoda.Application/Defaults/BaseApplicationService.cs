@@ -7,7 +7,7 @@ namespace OtoKurSkoda.Application.Defaults
 
         protected Result SuccessResult(string messageCode = "", string message = "")
         {
-            return new Result(status: true,  messageCode, message, ResultStatusCode.Success);
+            return new Result(status: true, messageCode, message, ResultStatusCode.Success);
         }
         protected DataResult<T> SuccessDataResult<T>(T resultData, string messageCode = "", string message = "")
         {
@@ -15,7 +15,7 @@ namespace OtoKurSkoda.Application.Defaults
         }
         protected DataResult<T> ErrorDataResult<T>(T resultData, string messageCode = "", string message = "")
         {
-            return new DataResult<T>(resultData, status: true, messageCode, message, ResultStatusCode.Error);
+            return new DataResult<T>(resultData, status: false, messageCode, message, ResultStatusCode.Error);
         }
         protected ListDataResult<T> SuccessListDataResult<T>(T resultData, string messageCode = "", string message = "") where T : ICollection
         {

@@ -84,8 +84,7 @@ namespace OtoKurSkoda.Application.Services.ProductServices.Services
                 ProductId = request.ProductId,
                 VehicleGenerationId = request.VehicleGenerationId,
                 Notes = request.Notes,
-                StartYear = request.StartYear,
-                EndYear = request.EndYear
+                Status = true
             };
 
             await repo.AddAsync(compatibility);
@@ -130,21 +129,41 @@ namespace OtoKurSkoda.Application.Services.ProductServices.Services
             if (product == null || !product.Status)
                 return ErrorResult("PRODUCT_NOT_FOUND", "Ürün bulunamadı.");
 
-            // Mevcut uyumlulukları soft delete
-            var existingCompatibilities = await repo.GetWhere(x => x.ProductId == request.ProductId && x.Status).ToListAsync();
+            // Mevcut TÜM uyumlulukları getir (aktif ve pasif)
+            var existingCompatibilities = await repo.GetWhere(x => x.ProductId == request.ProductId).ToListAsync();
+
+            // İstenen generation ID'leri set olarak
+            var requestedIds = request.VehicleGenerationIds.ToHashSet();
+
+            // Mevcut kayıtları işle
             foreach (var comp in existingCompatibilities)
             {
-                comp.Status = false;
-                repo.Update(comp);
+                if (requestedIds.Contains(comp.VehicleGenerationId))
+                {
+                    // Bu generation isteniyor - aktif yap
+                    comp.Status = true;
+                    repo.Update(comp);
+                    requestedIds.Remove(comp.VehicleGenerationId); // İşlendi, listeden çıkar
+                }
+                else
+                {
+                    // Bu generation istenmiyor - pasif yap
+                    if (comp.Status)
+                    {
+                        comp.Status = false;
+                        repo.Update(comp);
+                    }
+                }
             }
 
-            // Yeni uyumlulukları ekle
-            foreach (var generationId in request.VehicleGenerationIds)
+            // Kalan ID'ler için yeni kayıt oluştur (daha önce hiç eklenmemiş olanlar)
+            foreach (var generationId in requestedIds)
             {
                 var compatibility = new ProductCompatibility
                 {
                     ProductId = request.ProductId,
-                    VehicleGenerationId = generationId
+                    VehicleGenerationId = generationId,
+                    Status = true
                 };
                 await repo.AddAsync(compatibility);
             }

@@ -4,19 +4,19 @@ namespace OtoKurSkoda.Application.Defaults
 {
     public class PagedResult<T>
     {
-        [JsonPropertyName("Items")]
+        [JsonPropertyName("items")]
         public List<T> Items { get; set; }
 
-        [JsonPropertyName("TotalCount")]
+        [JsonPropertyName("totalCount")]
         public int TotalCount { get; set; }
 
-        [JsonPropertyName("PageNumber")]
+        [JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; }
 
-        [JsonPropertyName("PageSize")]
+        [JsonPropertyName("pageSize")]
         public int PageSize { get; set; }
 
-        [JsonPropertyName("TotalPages")]
+        [JsonPropertyName("totalPages")]
         public int TotalPages { get; set; }
 
         public PagedResult()

@@ -21,7 +21,7 @@ namespace OtoKurSkoda.Infrastructure.UnitOfWork
 
             _dbContext = dbContext;
 
-    
+
 
             _configuration = configuration;
         }
@@ -36,19 +36,19 @@ namespace OtoKurSkoda.Infrastructure.UnitOfWork
         {
             try
             {
-                
+
                 return await _dbContext.SaveChangesAsync();
             }
             catch
             {
-                
+
                 throw;
             }
         }
         #endregion
 
         #region IDisposable Members
-       
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

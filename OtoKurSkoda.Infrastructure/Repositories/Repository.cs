@@ -1,10 +1,11 @@
-﻿using OtoKurSkoda.Domain.Defaults;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Linq.Expressions;
-using OtoKurSkoda.Infrastructure.Context;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Configuration;
+using OtoKurSkoda.Domain.Defaults;
+using OtoKurSkoda.Infrastructure.Context;
+using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace OtoKurSkoda.Infrastructure.Repositories
 {
@@ -21,47 +22,66 @@ namespace OtoKurSkoda.Infrastructure.Repositories
             _dbSet = _dbcontext.Set<T>();
             _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
-
-
         }
 
+        /// <summary>
+        /// JWT token'dan kullanıcı ID'sini alır
+        /// </summary>
+        private Guid GetCurrentUserId()
+        {
+            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+            
+            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return userId;
+            }
+            
+            return Guid.Empty;
+        }
 
+        /// <summary>
+        /// Config'den TenantId'yi alır
+        /// </summary>
+        private Guid GetTenantId()
+        {
+            var tenantIdStr = _configuration.GetSection("TenatId").Value;
+            return Guid.TryParse(tenantIdStr, out var tenantId) ? tenantId : Guid.Empty;
+        }
 
         public async Task<bool> AddAsync(T entity)
         {
-           
-            var cok = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault().Value.Replace("NameId", "").Trim();
             entity.CreateTime = DateTime.Now;
-            entity.CreateUserId = Guid.Parse(cok);
+            entity.CreateUserId = GetCurrentUserId();
             entity.Status = true;
-            entity.TenatId = Guid.Parse(_configuration.GetSection("TenatId").Value);
+            entity.TenatId = GetTenantId();
+            
             var res = await _dbSet.AddAsync(entity);
-
             return res.State == EntityState.Added;
-
         }
 
         public async Task<bool> AddWithoutTokenAsync(T entity)
         {
-
-           
             entity.CreateTime = DateTime.Now;
-            entity.CreateUserId = Guid.Parse("00000000-0000-0000-0000-000000000000");
+            entity.CreateUserId = Guid.Empty;
             entity.Status = true;
-            entity.TenatId = Guid.Parse(_configuration.GetSection("TenatId").Value);
+            entity.TenatId = GetTenantId();
+            
             var res = await _dbSet.AddAsync(entity);
-
             return res.State == EntityState.Added;
-
         }
 
         public async Task AddRangeAsync(IEnumerable<T> entities)
         {
-            var cok = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault().Value.Replace("Id", "").Trim();
-            entities.ToList().ForEach(x => x.CreateTime = DateTime.Now);
-            entities.ToList().ForEach(x => x.CreateUserId = Guid.Parse(cok));
-            entities.ToList().ForEach(x => x.TenatId = Guid.Parse(_configuration.GetSection("TenatId").Value));
+            var userId = GetCurrentUserId();
+            var tenantId = GetTenantId();
 
+            foreach (var entity in entities)
+            {
+                entity.CreateTime = DateTime.Now;
+                entity.CreateUserId = userId;
+                entity.Status = true;
+                entity.TenatId = tenantId;
+            }
 
             await _dbSet.AddRangeAsync(entities);
         }
@@ -75,6 +95,7 @@ namespace OtoKurSkoda.Infrastructure.Repositories
         public async Task<bool> DeleteByIdAsync(Guid id)
         {
             var entity = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            if (entity == null) return false;
             return Delete(entity);
         }
 
@@ -110,43 +131,36 @@ namespace OtoKurSkoda.Infrastructure.Repositories
 
         public bool Update(T entity)
         {
-
-
             entity.UpdateTime = DateTime.Now;
-            var cok = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault().Value.Replace("Id", "").Trim();
-            entity.UpdateUserId = Guid.Parse(cok);
+            entity.UpdateUserId = GetCurrentUserId();
 
             EntityEntry<T> entityEntry = _dbSet.Update(entity);
             entityEntry.Property(e => e.CreateTime).IsModified = false;
             entityEntry.Property(e => e.CreateUserId).IsModified = false;
             entityEntry.Property(e => e.TenatId).IsModified = false;
+            
             return entityEntry.State == EntityState.Modified;
         }
 
         public void UpdateRange(IEnumerable<T> entities)
         {
-            var cok = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault().Value.Replace("Id", "").Trim();
+            var userId = GetCurrentUserId();
 
-
-            foreach (var item in entities)
+            foreach (var entity in entities)
             {
-                item.UpdateTime = DateTime.Now;
+                entity.UpdateTime = DateTime.Now;
+                entity.UpdateUserId = userId;
 
-                item.UpdateUserId = Guid.Parse(cok);
-
-                EntityEntry<T> entityEntry = _dbSet.Update(item);
+                EntityEntry<T> entityEntry = _dbSet.Update(entity);
                 entityEntry.Property(e => e.CreateTime).IsModified = false;
                 entityEntry.Property(e => e.CreateUserId).IsModified = false;
                 entityEntry.Property(e => e.TenatId).IsModified = false;
-
-
             }
-            _dbSet.UpdateRange();
         }
 
         public async Task<bool> AnyAsync()
         {
-            return  await _dbSet.AnyAsync();
+            return await _dbSet.AnyAsync();
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
@@ -157,12 +171,13 @@ namespace OtoKurSkoda.Infrastructure.Repositories
         public bool UpdateWithOutToken(T entity)
         {
             entity.UpdateTime = DateTime.Now;
-            entity.UpdateUserId = Guid.Empty; ;
+            entity.UpdateUserId = Guid.Empty;
 
             EntityEntry<T> entityEntry = _dbSet.Update(entity);
             entityEntry.Property(e => e.CreateTime).IsModified = false;
             entityEntry.Property(e => e.CreateUserId).IsModified = false;
             entityEntry.Property(e => e.TenatId).IsModified = false;
+            
             return entityEntry.State == EntityState.Modified;
         }
     }

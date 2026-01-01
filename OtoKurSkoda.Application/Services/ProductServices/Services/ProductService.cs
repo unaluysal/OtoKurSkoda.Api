@@ -105,7 +105,6 @@ namespace OtoKurSkoda.Application.Services.ProductServices.Services
                 .Include(x => x.Category)
                 .Include(x => x.Manufacturer)
                 .Include(x => x.Images.Where(i => i.Status).OrderBy(i => i.DisplayOrder))
-                .Include(x => x.Attributes).ThenInclude(a => a.AttributeDefinition)
                 .Include(x => x.Compatibilities).ThenInclude(c => c.VehicleGeneration)
                     .ThenInclude(g => g.VehicleModel).ThenInclude(m => m.Brand)
                 .FirstOrDefaultAsync();
@@ -130,8 +129,7 @@ namespace OtoKurSkoda.Application.Services.ProductServices.Services
                 .Include(x => x.Category)
                 .Include(x => x.Manufacturer)
                 .Include(x => x.Images.Where(i => i.Status).OrderBy(i => i.DisplayOrder))
-                .Include(x => x.Attributes).ThenInclude(a => a.AttributeDefinition)
-                .Include(x => x.Compatibilities).ThenInclude(c => c.VehicleGeneration)
+                               .Include(x => x.Compatibilities).ThenInclude(c => c.VehicleGeneration)
                     .ThenInclude(g => g.VehicleModel).ThenInclude(m => m.Brand)
                 .FirstOrDefaultAsync();
 
@@ -438,15 +436,7 @@ namespace OtoKurSkoda.Application.Services.ProductServices.Services
                 DisplayOrder = i.DisplayOrder,
                 IsMain = i.IsMain
             }).ToList(),
-            Attributes = p.Attributes.Select(a => new ProductAttributeDto
-            {
-                Id = a.Id,
-                ProductId = a.ProductId,
-                AttributeDefinitionId = a.AttributeDefinitionId,
-                AttributeName = a.AttributeDefinition.Name,
-                Unit = a.AttributeDefinition.Unit,
-                Value = a.Value
-            }).ToList(),
+            
             Compatibilities = p.Compatibilities.Select(c => new ProductCompatibilityDto
             {
                 Id = c.Id,

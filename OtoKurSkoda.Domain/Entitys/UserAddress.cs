@@ -2,7 +2,7 @@
 
 namespace OtoKurSkoda.Domain.Entitys
 {
-    public class UserAddress :BaseEntity
+    public class UserAddress : BaseEntity
     {
         public Guid UserId { get; set; }
         public virtual User User { get; set; }

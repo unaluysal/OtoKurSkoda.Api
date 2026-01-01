@@ -6,7 +6,7 @@ namespace OtoKurSkoda.Domain.Entitys
     {
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
-        
+
         // Sipariş anındaki ürün bilgileri (değişebilir diye saklanıyor)
         public string ProductName { get; set; }
         public string ProductSku { get; set; }

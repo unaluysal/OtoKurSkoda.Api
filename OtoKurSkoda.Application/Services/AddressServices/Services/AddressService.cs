@@ -22,7 +22,7 @@ namespace OtoKurSkoda.Application.Services.AddressServices.Services
         public async Task<ServiceResult> GetUserAddressesAsync(Guid userId)
         {
             var repo = _unitOfWork.GetRepository<UserAddress>();
-            var addresses = await repo.GetWhere(a => a.UserId == userId && a.Status==true).ToListAsync();
+            var addresses = await repo.GetWhere(a => a.UserId == userId && a.Status == true).ToListAsync();
             var dtos = _mapper.Map<List<AddressDto>>(addresses.OrderByDescending(a => a.IsDefault).ThenBy(a => a.Title));
             return SuccessListDataResult(dtos, "ADDRESSES_FOUND", "Adresler listelendi.");
         }
@@ -63,8 +63,8 @@ namespace OtoKurSkoda.Application.Services.AddressServices.Services
             // Eğer varsayılan olarak işaretlendiyse, diğer aynı tipteki adreslerin varsayılanını kaldır
             if (request.IsDefault)
             {
-                var existingDefaults = await repo.GetWhere(a => a.UserId == userId 
-                &&a.Status 
+                var existingDefaults = await repo.GetWhere(a => a.UserId == userId
+                && a.Status
                 && a.Type == request.Type && a.IsDefault).ToListAsync();
                 foreach (var existingDefault in existingDefaults)
                 {
@@ -104,7 +104,7 @@ namespace OtoKurSkoda.Application.Services.AddressServices.Services
             if (request.IsDefault && !address.IsDefault)
             {
                 var existingDefaults = await repo.GetWhere(a => a.UserId == userId && a.Type == request.Type && a.IsDefault && a.Id != request.Id
-                &&a.Status).ToListAsync();
+                && a.Status).ToListAsync();
                 foreach (var existingDefault in existingDefaults)
                 {
                     existingDefault.IsDefault = false;
@@ -143,7 +143,7 @@ namespace OtoKurSkoda.Application.Services.AddressServices.Services
                 return ErrorResult("ADDRESS_NOT_FOUND", "Adres bulunamadı.");
 
             // Aynı tipteki diğer varsayılanları kaldır
-            var existingDefaults = await repo.GetWhere(a => a.UserId == userId && 
+            var existingDefaults = await repo.GetWhere(a => a.UserId == userId &&
             a.Type == address.Type && a.IsDefault && a.Status).ToListAsync();
             foreach (var existingDefault in existingDefaults)
             {

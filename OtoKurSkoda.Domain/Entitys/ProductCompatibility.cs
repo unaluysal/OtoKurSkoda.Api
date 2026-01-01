@@ -11,8 +11,6 @@ namespace OtoKurSkoda.Domain.Entitys
         public Guid ProductId { get; set; }
         public Guid VehicleGenerationId { get; set; }
         public string? Notes { get; set; }              // "Sadece dizel motorlar", "1.6 TDI hariç" vb.
-        public int? StartYear { get; set; }             // Opsiyonel: Belirli yıl aralığı için
-        public int? EndYear { get; set; }
 
         // Navigation
         public virtual Product Product { get; set; } = null!;

@@ -79,10 +79,7 @@ namespace OtoKurSkoda.Infrastructure.Context.Configurations
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(x => x.Attributes)
-                .WithOne(x => x.Product)
-                .HasForeignKey(x => x.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+         
 
             builder.HasMany(x => x.Compatibilities)
                 .WithOne(x => x.Product)

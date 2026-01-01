@@ -49,7 +49,6 @@ namespace OtoKurSkoda.Domain.Entitys
         public virtual Category Category { get; set; } = null!;
         public virtual Manufacturer? Manufacturer { get; set; }
         public virtual ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
-        public virtual ICollection<ProductAttribute> Attributes { get; set; } = new List<ProductAttribute>();
         public virtual ICollection<ProductCompatibility> Compatibilities { get; set; } = new List<ProductCompatibility>();
         public virtual ICollection<RelatedProduct> RelatedProducts { get; set; } = new List<RelatedProduct>();
         public virtual ICollection<RelatedProduct> RelatedToProducts { get; set; } = new List<RelatedProduct>();

@@ -18,16 +18,16 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly JwtSettings _jwtSettings;
-        private readonly IUserRoleService _userRoleService; 
+        private readonly IUserRoleService _userRoleService;
 
         public AuthService(
             IUnitOfWork unitOfWork,
             IOptions<JwtSettings> jwtSettings,
-            IUserRoleService userRoleService) 
+            IUserRoleService userRoleService)
         {
             _unitOfWork = unitOfWork;
             _jwtSettings = jwtSettings.Value;
-            _userRoleService = userRoleService; 
+            _userRoleService = userRoleService;
         }
 
         public async Task<ServiceResult> RegisterAsync(RegisterRequest request, string ipAddress = "")
@@ -58,7 +58,7 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
             await _unitOfWork.SaveChangesAsync();
 
             // Varsayılan "Customers" rolü ata
-            var customerRoleGroup = await roleGroupRepo.GetFirstWhereAsync(rg => rg.Name == "Customers");
+            var customerRoleGroup = await roleGroupRepo.GetFirstWhereAsync(rg => rg.Name == "Müşteri");
             if (customerRoleGroup != null)
             {
                 await _userRoleService.AssignRoleGroupAsync(new AssignRoleGroupToUserRequest
@@ -71,7 +71,7 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
             // Token oluştur
             var permissions = new UserPermissionsDto
             {
-                RoleGroups = new List<string> { "Customers" },
+                RoleGroups = new List<string> { "Müşteri" },
                 Permissions = new List<string>()
             };
 
@@ -93,13 +93,14 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
                     PhoneNumber = user.PhoneNumber,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Roles = new List<string> { "Customers" }
+                    Roles = new List<string> { "Müşteri" }
                 }
             }, "REGISTER_SUCCESS", "Kayıt başarılı.");
         }
 
         public async Task<ServiceResult> LoginAsync(LoginRequest request, string ipAddress)
         {
+
             var userRepo = _unitOfWork.GetRepository<User>();
             var refreshTokenRepo = _unitOfWork.GetRepository<RefreshToken>();
 
@@ -116,6 +117,8 @@ namespace OtoKurSkoda.Application.Services.AuthServices.Services
             var permissions = permissionsResult.Status
                 ? ((DataResult<UserPermissionsDto>)permissionsResult).Data
                 : null;
+
+
 
             var accessToken = GenerateAccessToken(user, permissions);
             var refreshToken = CreateRefreshToken(user.Id, ipAddress);

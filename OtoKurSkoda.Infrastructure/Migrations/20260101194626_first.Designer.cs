@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OtoKurSkoda.Infrastructure.Context;
@@ -11,9 +12,11 @@ using OtoKurSkoda.Infrastructure.Context;
 namespace OtoKurSkoda.Infrastructure.Migrations
 {
     [DbContext(typeof(OtoKurSkodaDbContext))]
-    partial class OtoKurSkodaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260101194626_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +25,75 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.AttributeDefinition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("DataType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DefaultValue")
+                        .HasColumnType("text");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsFilterable")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsRequired")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVisibleOnProductPage")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PossibleValues")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean")
+                        .HasColumnOrder(7);
+
+                    b.Property<Guid>("TenatId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(6);
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("timestamp")
+                        .HasColumnOrder(4);
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(5);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AttributeDefinition", "OtoKurSkoda");
+                });
 
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.Brand", b =>
                 {
@@ -270,6 +342,58 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories", "OtoKurSkoda");
+                });
+
+            modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.CategoryAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("AttributeDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(3);
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsRequired")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean")
+                        .HasColumnOrder(7);
+
+                    b.Property<Guid>("TenatId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(6);
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("timestamp")
+                        .HasColumnOrder(4);
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(5);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeDefinitionId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryAttribute", "OtoKurSkoda");
                 });
 
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.Manufacturer", b =>
@@ -754,6 +878,56 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Products", "OtoKurSkoda");
+                });
+
+            modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.ProductAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("AttributeDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp")
+                        .HasColumnOrder(2);
+
+                    b.Property<Guid>("CreateUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(3);
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean")
+                        .HasColumnOrder(7);
+
+                    b.Property<Guid>("TenatId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(6);
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("timestamp")
+                        .HasColumnOrder(4);
+
+                    b.Property<Guid?>("UpdateUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(5);
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeDefinitionId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductAttribute", "OtoKurSkoda");
                 });
 
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.ProductCompatibility", b =>
@@ -1460,6 +1634,25 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.CategoryAttribute", b =>
+                {
+                    b.HasOne("OtoKurSkoda.Domain.Entitys.AttributeDefinition", "AttributeDefinition")
+                        .WithMany("CategoryAttributes")
+                        .HasForeignKey("AttributeDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OtoKurSkoda.Domain.Entitys.Category", "Category")
+                        .WithMany("CategoryAttributes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AttributeDefinition");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.Order", b =>
                 {
                     b.HasOne("OtoKurSkoda.Domain.Entitys.User", "User")
@@ -1506,6 +1699,25 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.ProductAttribute", b =>
+                {
+                    b.HasOne("OtoKurSkoda.Domain.Entitys.AttributeDefinition", "AttributeDefinition")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("AttributeDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OtoKurSkoda.Domain.Entitys.Product", "Product")
+                        .WithMany("Attributes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AttributeDefinition");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.ProductCompatibility", b =>
@@ -1639,6 +1851,13 @@ namespace OtoKurSkoda.Infrastructure.Migrations
                     b.Navigation("Brand");
                 });
 
+            modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.AttributeDefinition", b =>
+                {
+                    b.Navigation("CategoryAttributes");
+
+                    b.Navigation("ProductAttributes");
+                });
+
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.Brand", b =>
                 {
                     b.Navigation("VehicleModels");
@@ -1651,6 +1870,8 @@ namespace OtoKurSkoda.Infrastructure.Migrations
 
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.Category", b =>
                 {
+                    b.Navigation("CategoryAttributes");
+
                     b.Navigation("Children");
 
                     b.Navigation("Products");
@@ -1668,6 +1889,8 @@ namespace OtoKurSkoda.Infrastructure.Migrations
 
             modelBuilder.Entity("OtoKurSkoda.Domain.Entitys.Product", b =>
                 {
+                    b.Navigation("Attributes");
+
                     b.Navigation("Compatibilities");
 
                     b.Navigation("Images");

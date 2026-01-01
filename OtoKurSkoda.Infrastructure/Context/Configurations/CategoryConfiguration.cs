@@ -50,10 +50,6 @@ namespace OtoKurSkoda.Infrastructure.Context.Configurations
                 .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(x => x.CategoryAttributes)
-                .WithOne(x => x.Category)
-                .HasForeignKey(x => x.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

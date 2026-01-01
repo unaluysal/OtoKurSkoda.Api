@@ -5,12 +5,8 @@ namespace OtoKurSkoda.Application.Defaults
 {
     public class ListDataResult<T> : ServiceResult where T : ICollection
     {
-        [JsonPropertyName("Data")]
-        public Data<T> Data
-        {
-            get;
-            set;
-        }
+        [JsonPropertyName("data")]
+        public Data<T> Data { get; set; }
 
         public ListDataResult()
             : base(status: true, "", "", ResultStatusCode.Success)

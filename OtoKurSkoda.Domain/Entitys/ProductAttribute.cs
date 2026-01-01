@@ -13,6 +13,5 @@ namespace OtoKurSkoda.Domain.Entitys
 
         // Navigation
         public virtual Product Product { get; set; } = null!;
-        public virtual AttributeDefinition AttributeDefinition { get; set; } = null!;
     }
 }

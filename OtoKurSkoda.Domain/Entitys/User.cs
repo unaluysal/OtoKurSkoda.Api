@@ -12,7 +12,7 @@ namespace OtoKurSkoda.Domain.Entitys
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public DateTime? LastLoginAt { get; set; }  
+        public DateTime? LastLoginAt { get; set; }
 
         // Navigation Properties 
         public virtual ICollection<UserRole> UserRoles { get; set; }

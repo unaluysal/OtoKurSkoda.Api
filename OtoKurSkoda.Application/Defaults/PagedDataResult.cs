@@ -4,7 +4,7 @@ namespace OtoKurSkoda.Application.Defaults
 {
     public class PagedDataResult<T> : ServiceResult
     {
-        [JsonPropertyName("Data")]
+        [JsonPropertyName("data")]
         public PagedResult<T> Data { get; set; }
 
         public PagedDataResult(PagedResult<T> data, bool status, string messageCode, string message, ResultStatusCode resultStatusCode)

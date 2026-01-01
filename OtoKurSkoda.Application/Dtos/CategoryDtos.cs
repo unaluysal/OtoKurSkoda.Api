@@ -34,19 +34,6 @@ namespace OtoKurSkoda.Application.Dtos
         public List<CategoryTreeDto> Children { get; set; } = new();
     }
 
-    public class CategoryListDto
-    {
-        public Guid Id { get; set; }
-        public Guid? ParentId { get; set; }
-        public string? ParentName { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Slug { get; set; } = string.Empty;
-        public string? ImageUrl { get; set; }
-        public string? Color { get; set; }
-        public int Level { get; set; }
-        public int DisplayOrder { get; set; }
-    }
-
     public class CreateCategoryRequest
     {
         public Guid? ParentId { get; set; }

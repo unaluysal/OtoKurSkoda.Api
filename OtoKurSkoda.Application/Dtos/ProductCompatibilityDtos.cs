@@ -20,8 +20,6 @@ namespace OtoKurSkoda.Application.Dtos
         public Guid ProductId { get; set; }
         public Guid VehicleGenerationId { get; set; }
         public string? Notes { get; set; }
-        public int? StartYear { get; set; }
-        public int? EndYear { get; set; }
     }
 
     public class SetProductCompatibilitiesRequest
@@ -30,11 +28,4 @@ namespace OtoKurSkoda.Application.Dtos
         public List<Guid> VehicleGenerationIds { get; set; } = new();
     }
 
-    public class VehicleCompatibilitySearchRequest
-    {
-        public Guid? BrandId { get; set; }
-        public Guid? VehicleModelId { get; set; }
-        public Guid? VehicleGenerationId { get; set; }
-        public int? Year { get; set; }
-    }
 }

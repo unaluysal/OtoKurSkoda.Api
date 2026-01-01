@@ -1,6 +1,5 @@
 using OtoKurSkoda.Application.Defaults;
 using OtoKurSkoda.Application.Dtos;
-using OtoKurSkoda.Domain.Entitys;
 
 namespace OtoKurSkoda.Application.Services.OrderServices.Interfaces
 {

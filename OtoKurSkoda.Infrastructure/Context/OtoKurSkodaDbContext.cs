@@ -37,9 +37,6 @@ namespace OtoKurSkoda.Infrastructure.Context
             modelBuilder.ApplyConfiguration(new RelatedProductConfiguration());
 
             // Attribute Configurations (EAV)
-            modelBuilder.ApplyConfiguration(new AttributeDefinitionConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryAttributeConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductAttributeConfiguration());
 
             // Cart & Order Configurations
             modelBuilder.ApplyConfiguration(new CartConfiguration());
@@ -73,9 +70,6 @@ namespace OtoKurSkoda.Infrastructure.Context
         public DbSet<RelatedProduct> RelatedProducts { get; set; }
 
         // Attributes (EAV)
-        public DbSet<AttributeDefinition> AttributeDefinitions { get; set; }
-        public DbSet<CategoryAttribute> CategoryAttributes { get; set; }
-        public DbSet<ProductAttribute> ProductAttributes { get; set; }
 
         // Cart & Order
         public DbSet<Cart> Carts { get; set; }

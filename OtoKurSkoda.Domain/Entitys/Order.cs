@@ -8,7 +8,7 @@ namespace OtoKurSkoda.Domain.Entitys
         public Guid UserId { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
-        
+
         // Fiyatlar
         public decimal SubTotal { get; set; }
         public decimal ShippingCost { get; set; }

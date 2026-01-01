@@ -16,16 +16,6 @@ namespace OtoKurSkoda.Application.Dtos
         public string YearRange => EndYear.HasValue ? $"{StartYear}-{EndYear}" : $"{StartYear}-";
     }
 
-    public class VehicleGenerationListDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string? Code { get; set; }
-        public int StartYear { get; set; }
-        public int? EndYear { get; set; }
-        public string? ImageUrl { get; set; }
-    }
-
     public class CreateVehicleGenerationRequest
     {
         public Guid VehicleModelId { get; set; }

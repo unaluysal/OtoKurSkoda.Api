@@ -4,12 +4,8 @@ namespace OtoKurSkoda.Application.Defaults
 {
     public class DataResult<T> : ServiceResult
     {
-        [JsonPropertyName("Data")]
-        public T Data
-        {
-            get;
-            set;
-        }
+        [JsonPropertyName("data")]
+        public T Data { get; set; }
 
         public DataResult()
             : base(status: true, "", "", ResultStatusCode.Success)

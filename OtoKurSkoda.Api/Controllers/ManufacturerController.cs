@@ -3,11 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OtoKurSkoda.Application.Dtos;
 using OtoKurSkoda.Application.Services.CatalogServices.Interfaces;
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using OtoKurSkoda.Application.Dtos;
-using OtoKurSkoda.Application.Services.CatalogServices.Interfaces;
-
 namespace OtoKurSkoda.Api.Controllers
 {
     [Route("api/[controller]")]

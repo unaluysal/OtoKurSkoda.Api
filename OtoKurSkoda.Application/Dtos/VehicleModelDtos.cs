@@ -14,15 +14,6 @@ namespace OtoKurSkoda.Application.Dtos
         public int GenerationCount { get; set; }
     }
 
-    public class VehicleModelListDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Slug { get; set; } = string.Empty;
-        public string? ImageUrl { get; set; }
-        public int DisplayOrder { get; set; }
-    }
-
     public class CreateVehicleModelRequest
     {
         public Guid BrandId { get; set; }
